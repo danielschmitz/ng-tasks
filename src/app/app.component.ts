@@ -11,6 +11,7 @@ import { map, shareReplay } from 'rxjs/operators';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { ThemePicker } from './shared/theme-picker';
 import { AuthService } from './shared/auth.service';
+import { LogoutButtonComponent } from './shared/logout-button.component';
 
 @Component({
   selector: 'app-root',
@@ -26,23 +27,28 @@ import { AuthService } from './shared/auth.service';
     AsyncPipe,
     RouterOutlet,
     ThemePicker,
-    RouterLink
+    RouterLink,
+    LogoutButtonComponent,
   ],
 })
 export class AppComponent implements OnInit {
-  auth = inject(AuthService);
+  authService = inject(AuthService);
   private breakpointObserver = inject(BreakpointObserver);
   loggedIn = false;
   ngOnInit(): void {
-    this.auth.loginState$.subscribe(isLoggedIn => {
+    this.authService.loginState$.subscribe((isLoggedIn) => {
       this.loggedIn = isLoggedIn;
     });
   }
-  
+
   isHandset$: Observable<boolean> = this.breakpointObserver
     .observe(Breakpoints.Handset)
     .pipe(
       map((result) => result.matches),
       shareReplay(),
     );
+
+  logout() {
+    this.authService.logout();
+  }
 }

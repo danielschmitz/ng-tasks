@@ -15,6 +15,7 @@
        @if(loggedIn) {
          <a mat-list-item routerLink="/categories" >Categories</a>
          <a mat-list-item routerLink="/" >Tasks</a>
+         <a mat-list-item (click)="logout()" >Logout</a>
        } @else {
          <a mat-list-item routerLink="/login" >Login</a>
        }
@@ -41,6 +42,9 @@
       <span>angular-material-boilerplate</span>
       <div class="spacer"></div>
       <theme-picker></theme-picker>
+      @if (loggedIn) {
+        <app-logout-button></app-logout-button>
+      }
     </mat-toolbar>
     <div class="router-outlet">
       <router-outlet></router-outlet>
