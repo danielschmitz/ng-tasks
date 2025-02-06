@@ -11,8 +11,12 @@
     <mat-nav-list>
       <a mat-list-item routerLink="/" >Home</a>
 
-      <a mat-list-item routerLink="/" >Categories</a>
-      <a mat-list-item routerLink="/" >Tasks</a>
+
+       @if(loggedIn) {
+         <a mat-list-item routerLink="/" >Categories</a>
+         <a mat-list-item routerLink="/" >Tasks</a>
+       }
+      
       <a mat-list-item routerLink="/login" >Login</a>
       <!-- <a mat-list-item routerLink="/address-form" href="#">Address Form</a>
       <a mat-list-item routerLink="/system-variables" href="#">System Variables</a>
