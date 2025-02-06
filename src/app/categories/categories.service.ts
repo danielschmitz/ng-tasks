@@ -3,6 +3,11 @@ import { inject, Injectable } from '@angular/core';
 import { environment } from '@enviroments';
 import { Observable } from 'rxjs';
 
+export interface Category {
+  id: number;
+  name: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -12,7 +17,7 @@ export class CategoriesService {
 
   constructor() {}
 
-  getCategories(): Observable<any> {
-    return this.http.get(`${this.api}/categories`);
+  getCategories(): Observable<Category[]> {
+    return this.http.get<Category[]>(`${this.api}/categories`);
   }
 }

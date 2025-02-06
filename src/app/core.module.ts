@@ -13,7 +13,9 @@ import { MatCardModule } from '@angular/material/card';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { LoadingComponent } from './shared/loading.component';
-
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
   declarations: [],
@@ -35,7 +37,10 @@ import { LoadingComponent } from './shared/loading.component';
     MatSnackBarModule,
     MatSlideToggleModule,
     LoadingComponent,
-    JsonPipe
+    JsonPipe,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
   ],
   exports: [
     CommonModule,
@@ -55,7 +60,10 @@ import { LoadingComponent } from './shared/loading.component';
     MatSnackBarModule,
     MatSlideToggleModule,
     LoadingComponent,
-    JsonPipe
+    JsonPipe,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
   ],
 })
 export class CoreModule {}
