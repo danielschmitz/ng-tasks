@@ -14,7 +14,7 @@ export interface User {
 }
 
 const USER_KEY = 'authUser';
-const TOKEN = 'authToken';
+const TOKEN_KEY = 'authToken';
 
 @Injectable({
   providedIn: 'root',
@@ -65,7 +65,7 @@ export class AuthService {
             email: payload.email,
           };
           this.storage.set<User>(USER_KEY, user);
-          this.storage.set<Token>(TOKEN, token);
+          this.storage.set<Token>(TOKEN_KEY, token);
           this.loginState.next(true);
           return user;
         }),
@@ -84,10 +84,14 @@ export class AuthService {
     return this.storage.get<User>(USER_KEY);
   }
 
+  getToken(): Token | null {
+    return this.storage.get<Token>(TOKEN_KEY);
+  }
+
   logout() {
     this.user = null;
     this.storage.remove(USER_KEY);
-    this.storage.remove(TOKEN);
+    this.storage.remove(TOKEN_KEY);
     this.loginState.next(false);
   }
 
