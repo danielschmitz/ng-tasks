@@ -1,4 +1,4 @@
 export const environment = {
     production: true,
-    baseUrl: 'http://localhost:4200/api',
+    baseUrl: 'https://tasks-api-n871.onrender.com/api'
 };

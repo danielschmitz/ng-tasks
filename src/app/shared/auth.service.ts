@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { StorageService } from './storage.service';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../environments/environment';
+import { environment } from '@enviroments';
 import { BehaviorSubject, map, Observable } from 'rxjs';
 
 interface Token {
