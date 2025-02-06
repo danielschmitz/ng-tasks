@@ -1,0 +1,76 @@
+<h2>Login</h2>
+@if (!loggedIn) {
+   <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <app-loading [loading]="loading">
+        <mat-form-field appearance="fill">
+          <mat-label>Email</mat-label>
+          <input
+            matInput
+            id="email"
+            type="email"
+            formControlName="email"
+            placeholder="Enter your email"
+          />
+          <mat-error
+            *ngIf="form.get('email')?.invalid && form.get('email')?.touched"
+          >
+            @if (form.get("email")?.errors?.["required"]) {
+              Email is required.
+            }
+            @if (form.get("email")?.errors?.["email"]) {
+              Invalid email format.
+            }
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Password</mat-label>
+          <input
+            matInput
+            id="password"
+            type="password"
+            formControlName="password"
+            placeholder="Enter your password"
+          />
+          <mat-error
+            *ngIf="form.get('password')?.invalid && form.get('password')?.touched"
+          >
+            Password is required.
+          </mat-error>
+        </mat-form-field>
+        <mat-slide-toggle formControlName="createAccount"
+          >Create Account</mat-slide-toggle
+        >
+        @if (form.get("createAccount")?.value) {
+          <mat-form-field appearance="fill">
+            <mat-label>Name</mat-label>
+            <input
+              matInput
+              id="name"
+              formControlName="name"
+              placeholder="Enter your name"
+            />
+            <mat-error
+              *ngIf="
+                form.get('name')?.hasError('required') &&
+                form.get('name')?.touched
+              "
+            >
+              Name is required when creating an account.
+            </mat-error>
+          </mat-form-field>
+        }
+      </app-loading>
+    
+      <div class="actions">
+        <button mat-flat-button type="submit" [disabled]="form.invalid || loading">
+          {{ loading ? "Wait..." : "Submit" }}
+        </button>
+      </div>
+    </form>   
+} @else {
+
+  <p>Hi <b>{{userLoggedIn?.name}}</b></p> 
+  <p><a routerLink="/dashboard">Go to dashboard</a></p>
+  <p><button mat-flat-button (click)="logout()">Logout</button></p>
+}
+
