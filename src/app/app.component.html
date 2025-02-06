@@ -12,7 +12,7 @@
       <a mat-list-item routerLink="/" >Home</a>
 
 
-       @if(loggedIn) {
+       @if(loggedIn$ | async) {
          <a mat-list-item routerLink="/categories" >Categories</a>
          <a mat-list-item routerLink="/" >Tasks</a>
          <a mat-list-item (click)="logout()" >Logout</a>
@@ -42,7 +42,7 @@
       <span>angular-material-boilerplate</span>
       <div class="spacer"></div>
       <theme-picker></theme-picker>
-      @if (loggedIn) {
+      @if (loggedIn$ | async) {
         <app-logout-button></app-logout-button>
       }
     </mat-toolbar>

@@ -67,6 +67,7 @@ export class AuthService {
           this.storage.set<User>(USER_KEY, user);
           this.storage.set<Token>(TOKEN_KEY, token);
           this.loginState.next(true);
+          this.userState.next(user);
           return user;
         }),
       );

@@ -31,15 +31,10 @@ import { LogoutButtonComponent } from './shared/logout-button.component';
     LogoutButtonComponent,
   ],
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   authService = inject(AuthService);
   private breakpointObserver = inject(BreakpointObserver);
-  loggedIn = false;
-  ngOnInit(): void {
-    this.authService.loginState$.subscribe((isLoggedIn) => {
-      this.loggedIn = isLoggedIn;
-    });
-  }
+  loggedIn$: Observable<boolean> = this.authService.loginState$;
 
   isHandset$: Observable<boolean> = this.breakpointObserver
     .observe(Breakpoints.Handset)
@@ -52,3 +47,4 @@ export class AppComponent implements OnInit {
     this.authService.logout();
   }
 }
+

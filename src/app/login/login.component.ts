@@ -8,6 +8,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -21,9 +22,9 @@ export class LoginComponent implements OnInit {
   fb = inject(FormBuilder);
   loading = false;
   form: FormGroup;
-  loggedIn: boolean = false;
-  userLoggedIn: User | null = null;
-
+  loggedIn$: Observable<boolean> = this.auth.loginState$;
+  user$: Observable<User | null> = this.auth.userState$;
+  
   constructor() {
     this.form = this.fb.group(
       {
@@ -33,13 +34,7 @@ export class LoginComponent implements OnInit {
         name: [''],
       },
       { validators: this.nameRequiredIfCreatingAccount },
-    );
-    this.auth.loginState$.subscribe(isLoggedIn => {
-      this.loggedIn = isLoggedIn;
-    });
-    this.auth.userState$.subscribe(user => {
-      this.userLoggedIn = user;
-    });
+    );    
   }
 
   ngOnInit(): void {
