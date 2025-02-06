@@ -1,0 +1,28 @@
+/* You can add global styles to this file, and also import other style files */
+
+$mobile: 40rem;
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+/* The spacer class is used to create a flexbox spacer which will take up the rest of the space in the parent element.
+   It is used in the sidenav and toolbar to push the content to the right side of the screen. */
+.spacer {
+  flex: 1 1 auto; // flex-grow: 1, flex-shrink: 1, flex-basis: auto
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 5px;
+  flex-direction: column;
+  @media (min-width: $mobile) {
+    flex-direction: row;
+  }
+}
+
