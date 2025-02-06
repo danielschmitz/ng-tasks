@@ -12,9 +12,9 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     console.log('onInit');
-    this.auth.login('xHgF3@example.com', '123456').subscribe({
+    this.auth.login('user1@email.com', '123456').subscribe({
       next: (user) => {
-        console.log(user);
+        console.log({user});
       },
       error: (error) => {
         console.error("deu erro", error);
