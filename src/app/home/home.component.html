@@ -1,0 +1,11 @@
+<h2>Home</h2>
+
+
+@if (home$ | async) {
+    <p>Seja bem vindo</p>
+} @else {
+    <p class="error">
+        Aguarde... Iniciando backend!
+        <mat-progress-bar mode="buffer"></mat-progress-bar>
+    </p>
+}

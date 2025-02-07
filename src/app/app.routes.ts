@@ -6,11 +6,12 @@ import { TreeComponent } from './tree/tree.component';
 import { SystemVariables } from './system-variables';
 import { LoginComponent } from './login/login.component';
 import { CategoriesComponent } from './categories/categories.component';
+import { HomeComponent } from './home/home.component';
 
 export const routes: Routes = [
     {
         path: '',
-        component: DashboardComponent,
+        component: HomeComponent,
     },
     {
         path: 'login',

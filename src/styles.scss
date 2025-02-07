@@ -16,6 +16,10 @@ body {
   flex: 1 1 auto; // flex-grow: 1, flex-shrink: 1, flex-basis: auto
 }
 
+.error {
+  color: var(--mat-sys-error);
+}
+
 h2 {
   font-size: 1.5rem;
   font-weight: 400;
