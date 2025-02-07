@@ -53,9 +53,9 @@ export class AuthService {
 
   constructor() {}
 
-  login(email: string, password: string): Observable<User> {
+  login(email: string, password: string, name: string | null): Observable<User> {
     return this.http
-      .post<Token>(`${this.api}/auth/login`, { email, password })
+      .post<Token>(`${this.api}/auth/login`, { email, password, ...(name && { name }) })
       .pipe(
         map((token) => {
           const payload = this.decodeJwt(token);

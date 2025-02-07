@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
   form: FormGroup;
   loggedIn$: Observable<boolean> = this.auth.loginState$;
   user$: Observable<User | null> = this.auth.userState$;
-  
+
   constructor() {
     this.form = this.fb.group(
       {
@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
         name: [''],
       },
       { validators: this.nameRequiredIfCreatingAccount },
-    );    
+    );
   }
 
   ngOnInit(): void {
@@ -59,9 +59,9 @@ export class LoginComponent implements OnInit {
     if (this.form.valid) {
       const createAccount = this.form.get('createAccount')?.value;
       this.loading = true;
-      if (!createAccount) {
-        this.auth
-        .login(this.form.get('email')?.value, this.form.get('password')?.value)
+
+      this.auth
+        .login(this.form.get('email')?.value, this.form.get('password')?.value, createAccount ? this.form.get('name')?.value : null)  
         .subscribe({
           next: (user) => {
             this.loading = false;
@@ -74,23 +74,6 @@ export class LoginComponent implements OnInit {
             this.snak.open(error.error.message);
           },
         });
-      } else {
-        this.auth
-        .register(this.form.get('email')?.value, this.form.get('password')?.value, this.form.get('name')?.value)
-        .subscribe({
-          next: (user) => {
-            this.loading = false;
-            console.log({ user });
-            this.snak.open('Cadastro realizado com sucesso');
-          },
-          error: (error) => {
-            this.loading = false;
-            console.error('deu erro', error);
-            this.snak.open(error.error.message);
-          },
-        });
-      }
-     
     }
   }
 
