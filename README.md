@@ -1,4 +1,8 @@
-# AngularMaterialBoilerplate
+# Ng Tasks
+
+A simple Task Manager with angular 19
+
+Using the [tasks-api](https://github.com/danielschmitz/tasks-api) as a "backend"
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.1.5.
 
