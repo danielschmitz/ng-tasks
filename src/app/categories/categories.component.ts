@@ -21,7 +21,7 @@ export class CategoriesComponent implements OnInit, AfterViewInit {
   categories: Category[] = [];
   loading = false;
 
-  displayedColumns: string[] = ['id', 'name'];
+  displayedColumns: string[] = ['id', 'name', 'action'];
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatTable) table!: MatTable<Category>;
@@ -45,4 +45,7 @@ export class CategoriesComponent implements OnInit, AfterViewInit {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
   }
+
+  
 }
+

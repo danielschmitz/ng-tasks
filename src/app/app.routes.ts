@@ -8,6 +8,7 @@ import { LoginComponent } from './login/login.component';
 import { CategoriesComponent } from './categories/categories.component';
 import { HomeComponent } from './home/home.component';
 import { NewCategoryComponent } from './categories/new/new-category.component';
+import { EditCategoryComponent } from './categories/edit/edit-category.component';
 
 export const routes: Routes = [
     {
@@ -25,6 +26,10 @@ export const routes: Routes = [
     {
         path: 'categories/new',
         component: NewCategoryComponent,
+    },
+    {
+        path: 'categories/edit/:id',
+        component: EditCategoryComponent,
     },
     {
         path: 'address-form',

@@ -33,7 +33,7 @@ export class NewCategoryComponent {
       });
   }
   onBack() {
-    console.log('onBack');
     this.router.navigate(['/categories']);
   }
 }
+

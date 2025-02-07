@@ -10,7 +10,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./form-category.component.css'],
 })
 export class FormCategoryComponent {
-  @Input() category: Category = { name: '' };
+  @Input() set category(value: Category) {
+    this.updateForm(value);
+  }
   @Output() onSubmit = new EventEmitter<Category>();
   @Output() onBack = new EventEmitter();
   fb = inject(FormBuilder);
@@ -18,8 +20,14 @@ export class FormCategoryComponent {
 
   constructor() {
     this.form = this.fb.group({
-      id: [this.category.id],
-      name: [this.category.name, Validators.required],
+      id: [this.category?.id],
+      name: [this.category?.name, Validators.required],
+    });
+  }
+  private updateForm(category: Category) {
+    this.form.patchValue({
+      id: category.id,
+      name: category.name,
     });
   }
 
