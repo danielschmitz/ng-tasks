@@ -5,6 +5,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { CoreModule } from '../core.module';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-categories',
@@ -14,6 +15,7 @@ import { CoreModule } from '../core.module';
 })
 export class CategoriesComponent implements AfterViewInit {
   service = inject(CategoriesService);
+  snak = inject(MatSnackBar);
   categories$: Observable<Category[]> = this.service.getCategories();
   categories: Category[] = [];
   loading = false;
@@ -26,11 +28,17 @@ export class CategoriesComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.loading = true;
-    this.categories$.subscribe((categories) => {
-      this.dataSource.sort = this.sort;
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.data = categories;
-      this.loading = false;
+    this.categories$.subscribe({
+      next: (categories) => {
+        this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.data = categories;
+        this.loading = false;
+      },
+      error: () => {
+        this.loading = false;
+        this.snak.open('Error loading categories');
+      },
     });
   }
 }
