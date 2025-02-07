@@ -34,6 +34,17 @@ mat-form-field {
   width: 100%;
 }
 
+.row-container {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.noMarginPadding{
+  padding: 0px!important;
+  margin: 0px!important;
+}
+
 
 .actions {
   display: flex;

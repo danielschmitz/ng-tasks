@@ -21,7 +21,7 @@ export class CategoriesComponent implements OnInit, AfterViewInit {
   categories: Category[] = [];
   loading = false;
 
-  displayedColumns: string[] = ['id', 'name', 'action'];
+  displayedColumns: string[] = ['id', 'name', 'actionEdit', 'actionDelete'];
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatTable) table!: MatTable<Category>;
