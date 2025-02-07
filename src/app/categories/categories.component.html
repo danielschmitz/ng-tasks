@@ -1,4 +1,11 @@
-<h2>Categories</h2>
+
+
+<div class="toolbar">
+  <h2>Categories</h2>
+  <div class="spacer"></div>
+  <button mat-flat-button routerLink="/categories/new">New</button>
+</div>
+
 <app-loading [loading]="loading">
   <table mat-table [dataSource]="dataSource" class="full-width-table" matSort aria-label="Elements">
     <!-- Id Column -->
@@ -23,3 +30,5 @@
     showFirstLastButtons
   ></mat-paginator>
 </app-loading>
+
+

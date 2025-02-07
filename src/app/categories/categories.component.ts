@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, inject, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, inject, OnInit, ViewChild } from '@angular/core';
 import { CategoriesService, Category } from './categories.service';
 import { Observable } from 'rxjs';
 import { MatPaginator } from '@angular/material/paginator';
@@ -13,7 +13,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   templateUrl: './categories.component.html',
   styleUrl: './categories.component.css',
 })
-export class CategoriesComponent implements AfterViewInit {
+export class CategoriesComponent implements OnInit, AfterViewInit {
+
   service = inject(CategoriesService);
   snak = inject(MatSnackBar);
   categories$: Observable<Category[]> = this.service.getCategories();
@@ -26,12 +27,10 @@ export class CategoriesComponent implements AfterViewInit {
   @ViewChild(MatTable) table!: MatTable<Category>;
   dataSource = new MatTableDataSource<Category>([]);
 
-  ngAfterViewInit(): void {
+  ngOnInit(): void {
     this.loading = true;
     this.categories$.subscribe({
       next: (categories) => {
-        this.dataSource.sort = this.sort;
-        this.dataSource.paginator = this.paginator;
         this.dataSource.data = categories;
         this.loading = false;
       },
@@ -40,5 +39,10 @@ export class CategoriesComponent implements AfterViewInit {
         this.snak.open('Error loading categories');
       },
     });
+  }
+
+  ngAfterViewInit(): void {
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
   }
 }

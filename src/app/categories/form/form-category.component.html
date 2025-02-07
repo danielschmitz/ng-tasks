@@ -1,0 +1,13 @@
+<form [formGroup]="form" (ngSubmit)="onSubmitClick()" class="formfit">
+    <mat-form-field>
+      <mat-label>Name</mat-label>
+      <input matInput formControlName="name">
+      <mat-error *ngIf="form.get('name')?.hasError('required')">
+        The name is required.
+      </mat-error>
+    </mat-form-field>
+    <div class="actions">
+        <button mat-flat-button type="submit" [disabled]="form.invalid">Save</button>
+        <button mat-stroked-button type="button" (click)="onBackClick()">Back</button>
+    </div>
+  </form>

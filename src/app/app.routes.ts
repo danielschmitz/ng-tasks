@@ -7,6 +7,7 @@ import { SystemVariables } from './system-variables';
 import { LoginComponent } from './login/login.component';
 import { CategoriesComponent } from './categories/categories.component';
 import { HomeComponent } from './home/home.component';
+import { NewCategoryComponent } from './categories/new/new-category.component';
 
 export const routes: Routes = [
     {
@@ -20,6 +21,10 @@ export const routes: Routes = [
     {
         path: 'categories',
         component: CategoriesComponent,
+    },
+    {
+        path: 'categories/new',
+        component: NewCategoryComponent,
     },
     {
         path: 'address-form',

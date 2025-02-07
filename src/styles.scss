@@ -1,6 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 
-$mobile: 40rem;
+$mobile: 370px;
 
 html,
 body {
@@ -27,7 +27,13 @@ a {
 h2 {
   font-size: 1.5rem;
   font-weight: 400;
+  margin-top: 0px;
 }
+
+mat-form-field {
+  width: 100%;
+}
+
 
 .actions {
   display: flex;
@@ -39,4 +45,21 @@ h2 {
     flex-direction: row;
   }
 }
+
+.toolbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: flex-start;
+  gap: 5px;
+  margin-top: 15px;
+}
+
+.formfit {
+  max-width: 700px;
+  width: 90%;
+  padding: 1rem; // Opcional para um espaçamento interno agradável
+}
+
+
 
