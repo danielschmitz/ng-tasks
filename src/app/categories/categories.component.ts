@@ -78,8 +78,6 @@ export class CategoriesComponent implements OnInit, AfterViewInit {
               this.snak.open(error.message.message);
             }
           });
-        } else {
-          console.log('Usuário cancelou.');
         }
       });
   }
