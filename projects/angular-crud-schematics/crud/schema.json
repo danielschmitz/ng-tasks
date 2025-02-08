@@ -1,0 +1,26 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "id": "CrudSchema",
+  "title": "CRUD Schema",
+  "type": "object",
+  "properties": {
+    "entityName": {
+      "type": "string",
+      "description": "The name of the entity"
+    },
+    "fields": {
+      "type": "array",
+      "description": "List of fields for the entity",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string", "description": "Field name" },
+          "label": { "type": "string", "description": "Field label" },
+          "showInList": { "type": "boolean", "description": "Show in list view" }
+        },
+        "required": ["name", "label", "showInList"]
+      }
+    }
+  },
+  "required": ["entityName", "fields"]
+}

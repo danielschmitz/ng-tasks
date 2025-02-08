@@ -1,0 +1,11 @@
+{
+    "name": "angular-crud-schematics",
+    "version": "0.0.1",
+    "description": "CRUD Schematics for Angular",
+    "main": "./collection.json",
+    "schematics": "./collection.json",
+    "devDependencies": {
+      "@angular-devkit/schematics-cli": "^19.1.6"
+    }
+  }
+  
