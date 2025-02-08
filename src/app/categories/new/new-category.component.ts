@@ -21,7 +21,7 @@ export class NewCategoryComponent {
   onSubmit(category: Category) {
     this.loading = true;
     this.service
-      .createCategory(category)
+      .create(category)
       .pipe(finalize(() => (this.loading = false)))
       .subscribe({
         next: () => {

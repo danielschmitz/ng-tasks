@@ -33,7 +33,7 @@ export class EditCategoryComponent {
     this.loading = true;
     if (this.id === null) throw new Error('No id provided');
     try {
-      this.category = await firstValueFrom(this.service.getCategory(this.id));
+      this.category = await firstValueFrom(this.service.getById(this.id));
     } catch (error: HttpErrorResponse | any) {
       this.snak.open(error.error.message);
     }
@@ -42,13 +42,13 @@ export class EditCategoryComponent {
     }
   }
 
-  onBack() {
+  onBackClick() {
     this.router.navigate(['/categories']);
   }
-  async onSubmit(category: Category) {
+  async onSubmitClick(category: Category) {
     this.loading = true;
     try {
-      await firstValueFrom(this.service.updateCategory(category));
+      await firstValueFrom(this.service.update(this.id!,category));
       this.router.navigate(['/categories']);
     } catch (error: HttpErrorResponse | any) {
       this.snak.open(error.error.message);

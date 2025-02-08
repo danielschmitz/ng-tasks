@@ -25,7 +25,7 @@ export class CategoriesComponent implements OnInit, AfterViewInit {
   service = inject(CategoriesService);
   snak = inject(MatSnackBar);
   dialog = inject(MatDialog);
-  categories$: Observable<Category[]> = this.service.getCategories();
+  categories$: Observable<Category[]> = this.service.getAll()
   categories: Category[] = [];
   loading = false;
 
@@ -66,8 +66,8 @@ export class CategoriesComponent implements OnInit, AfterViewInit {
       .afterClosed()
       .subscribe((result) => {
         if (result) {
-          this.service.deleteCategory(id).subscribe(() => {
-            this.categories$ = this.service.getCategories();
+          this.service.delete(id).subscribe(() => {
+            this.categories$ = this.service.getAll();
             this.fetchCategories();
           });
         } else {
