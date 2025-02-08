@@ -1,51 +1,41 @@
 import { Routes } from '@angular/router';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { AdressFormComponent } from './adress-form/adress-form.component';
-import { TableComponent } from './table/table.component';
-import { TreeComponent } from './tree/tree.component';
-import { SystemVariables } from './system-variables';
-import { LoginComponent } from './login/login.component';
-import { CategoriesComponent } from './categories/categories.component';
-import { HomeComponent } from './home/home.component';
-import { NewCategoryComponent } from './categories/new/new-category.component';
-import { EditCategoryComponent } from './categories/edit/edit-category.component';
 
 export const routes: Routes = [
     {
         path: '',
-        component: HomeComponent,
+        loadComponent: () => import('./home/home.component').then(c => c.HomeComponent),
     },
     {
         path: 'login',
-        component: LoginComponent,
+        loadComponent: () => import('./login/login.component').then(c => c.LoginComponent),
     },
     {
         path: 'categories',
-        component: CategoriesComponent,
+        loadComponent: () => import('./categories/categories.component').then(c => c.CategoriesComponent),
     },
     {
         path: 'categories/new',
-        component: NewCategoryComponent,
+        loadComponent: () => import('./categories/new/new-category.component').then(c => c.NewCategoryComponent),
     },
     {
         path: 'categories/edit/:id',
-        component: EditCategoryComponent,
+        loadComponent: () => import('./categories/edit/edit-category.component').then(c => c.EditCategoryComponent),
     },
     {
         path: 'address-form',
-        component: AdressFormComponent,
+        loadComponent: () => import('./adress-form/adress-form.component').then(c => c.AdressFormComponent),
     },
     {
         path: 'system-variables',
-        component: SystemVariables,
+        loadComponent: () => import('./system-variables').then(c => c.SystemVariables),
     },
     {
         path: 'table',
-        component: TableComponent,
+        loadComponent: () => import('./table/table.component').then(c => c.TableComponent),
     },
     {
         path: 'tree',
-        component: TreeComponent,
+        loadComponent: () => import('./tree/tree.component').then(c => c.TreeComponent),
     },
-
 ];
+
