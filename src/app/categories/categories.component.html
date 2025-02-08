@@ -44,7 +44,7 @@
       <td mat-cell *matCellDef="let row" class="noMarginPadding">
         <button
           mat-icon-button
-          routerLink="/categories/edit/{{ row.id }}"
+          (click)="onDeleteClick(row.id)"
           aria-label="Edit"
         >
           <mat-icon>delete</mat-icon>

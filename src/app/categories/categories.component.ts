@@ -1,4 +1,10 @@
-import { AfterViewInit, Component, inject, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  inject,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { CategoriesService, Category } from './categories.service';
 import { Observable } from 'rxjs';
 import { MatPaginator } from '@angular/material/paginator';
@@ -6,6 +12,8 @@ import { MatSort } from '@angular/material/sort';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { CoreModule } from '../core.module';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from '../shared/confirm-dialog.component';
 
 @Component({
   selector: 'app-categories',
@@ -14,9 +22,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrl: './categories.component.css',
 })
 export class CategoriesComponent implements OnInit, AfterViewInit {
-
   service = inject(CategoriesService);
   snak = inject(MatSnackBar);
+  dialog = inject(MatDialog);
   categories$: Observable<Category[]> = this.service.getCategories();
   categories: Category[] = [];
   loading = false;
@@ -28,6 +36,15 @@ export class CategoriesComponent implements OnInit, AfterViewInit {
   dataSource = new MatTableDataSource<Category>([]);
 
   ngOnInit(): void {
+    this.fetchCategories();
+  }
+
+  ngAfterViewInit(): void {
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
+  }
+
+  fetchCategories() {
     this.loading = true;
     this.categories$.subscribe({
       next: (categories) => {
@@ -41,11 +58,21 @@ export class CategoriesComponent implements OnInit, AfterViewInit {
     });
   }
 
-  ngAfterViewInit(): void {
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
+  onDeleteClick(id: string) {
+    const dialogRef = this.dialog
+      .open(ConfirmDialogComponent, {
+        data: { question: 'Delete this category?' },
+      })
+      .afterClosed()
+      .subscribe((result) => {
+        if (result) {
+          this.service.deleteCategory(id).subscribe(() => {
+            this.categories$ = this.service.getCategories();
+            this.fetchCategories();
+          });
+        } else {
+          console.log('Usuário cancelou.');
+        }
+      });
   }
-
-  
 }
-
