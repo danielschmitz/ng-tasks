@@ -6,7 +6,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { CategoriesService, Category } from './categories.service';
-import { Observable } from 'rxjs';
+import { finalize, Observable } from 'rxjs';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
@@ -66,9 +66,17 @@ export class CategoriesComponent implements OnInit, AfterViewInit {
       .afterClosed()
       .subscribe((result) => {
         if (result) {
-          this.service.delete(id).subscribe(() => {
-            this.categories$ = this.service.getAll();
-            this.fetchCategories();
+          this.loading = true;
+          this.service.delete(id)
+          .pipe(finalize(() => (this.loading = false)))
+          .subscribe({
+            next: () => {
+              this.categories$ = this.service.getAll();
+              this.fetchCategories();
+            },
+            error: (error) => {
+              this.snak.open(error.message.message);
+            }
           });
         } else {
           console.log('Usuário cancelou.');
