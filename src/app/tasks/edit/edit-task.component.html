@@ -1,0 +1,5 @@
+<h2>Edit Task</h2>
+
+<app-loading [loading]="loading">
+    <app-form-task [task]="task" (onSubmit)="onSubmitClick($event)" (onBack)="onBackClick()"></app-form-task>
+</app-loading>

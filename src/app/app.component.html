@@ -14,7 +14,7 @@
 
        @if(loggedIn$ | async) {
          <a mat-list-item routerLink="/categories" >Categories</a>
-         <a mat-list-item routerLink="/" >Tasks</a>
+         <a mat-list-item routerLink="/tasks" >Tasks</a>
          <a mat-list-item (click)="logout()" >Logout</a>
        } @else {
          <a mat-list-item routerLink="/login" >Login</a>

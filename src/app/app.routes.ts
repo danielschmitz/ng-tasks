@@ -22,6 +22,18 @@ export const routes: Routes = [
         loadComponent: () => import('./categories/edit/edit-category.component').then(c => c.EditCategoryComponent),
     },
     {
+        path: 'tasks',
+        loadComponent: () => import('./tasks/tasks.component').then(c => c.TasksComponent),
+    },
+    {
+        path: 'tasks/new',
+        loadComponent: () => import('./tasks/new/new-task.component').then(c => c.NewTaskComponent),
+    },
+    {
+        path: 'tasks/edit/:id',
+        loadComponent: () => import('./tasks/edit/edit-task.component').then(c => c.EditTaskComponent),
+    },
+    {
         path: 'address-form',
         loadComponent: () => import('./adress-form/adress-form.component').then(c => c.AdressFormComponent),
     },
