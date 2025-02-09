@@ -29,7 +29,7 @@ export class TasksComponent implements OnInit, AfterViewInit {
   tasks: Task[] = [];
   loading = false;
 
-  displayedColumns: string[] = ['id', 'name', 'description', 'actionEdit', 'actionDelete'];
+  displayedColumns: string[] = ['id', 'name', 'category', 'description', 'actionEdit', 'actionDelete'];
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatTable) table!: MatTable<Task>;
