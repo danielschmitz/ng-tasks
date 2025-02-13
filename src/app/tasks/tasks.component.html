@@ -1,0 +1,205 @@
+<div class="toolbar">
+  <h2>Tasks</h2>
+  <div class="spacer"></div>
+  <button mat-flat-button routerLink="/tasks/new">New</button>
+</div>
+
+<mat-form-field>
+  <mat-label>Filter</mat-label>
+  <input matInput (keyup)="applyFilter($event)" #input />
+</mat-form-field>
+
+<app-loading [loading]="loading">
+ 
+  <table
+    mat-table
+    [dataSource]="dataSource"
+    class="full-width-table"
+    matSort
+    aria-label="Elements"
+  >
+    <ng-container matColumnDef="select">
+      <th mat-header-cell *matHeaderCellDef>
+        <mat-checkbox
+          (change)="$event ? toggleAllRows() : null"
+          [checked]="selection.hasValue() && isAllSelected()"
+          [indeterminate]="selection.hasValue() && !isAllSelected()"
+        >
+        </mat-checkbox>
+      </th>
+      <td mat-cell *matCellDef="let row">
+        <mat-checkbox
+          (click)="$event.stopPropagation()"
+          (change)="$event ? selection.toggle(row) : null"
+          [checked]="selection.isSelected(row)"
+        >
+        </mat-checkbox>
+      </td>
+    </ng-container>
+
+    <!-- Id Column -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Id</th>
+      <td mat-cell *matCellDef="let row" width="50px">{{ row.id }}</td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+      <td mat-cell *matCellDef="let row" width="20%">{{ row.name }}</td>
+    </ng-container>
+
+    <!-- Description Column -->
+    <ng-container matColumnDef="description">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Description</th>
+      <td mat-cell *matCellDef="let row" width="50%">{{ row.description }}</td>
+    </ng-container>
+
+    <!-- Category Column -->
+    <ng-container matColumnDef="category">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Category</th>
+      <td mat-cell *matCellDef="let row" width="20%">{{ row.category }}</td>
+    </ng-container>
+
+    <!-- Action Edit Column -->
+    <ng-container matColumnDef="actionEdit">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+      <td mat-cell *matCellDef="let row" class="noMarginPadding" width="50px">
+        <button
+          mat-icon-button
+          routerLink="/tasks/edit/{{ row.id }}"
+          aria-label="Edit"
+        >
+          <mat-icon>edit</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <!-- Action Delete Column -->
+    <ng-container matColumnDef="actionDelete">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+      <td mat-cell *matCellDef="let row" class="noMarginPadding" width="50px">
+        <button
+          mat-icon-button
+          (click)="onDeleteClick(row.id)"
+          aria-label="Edit"
+        >
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+
+  <mat-paginator
+    [pageSize]="5"
+    [pageSizeOptions]="[5, 10, 20]"
+    showFirstLastButtons
+  ></mat-paginator>
+
+</app-loading>
+
+<button mat-flat-button color="primary" (click)="onMarkAsDoneClick()" [disabled]="!selection.hasValue()">Mark as done</button>
+
+<br/><br/>
+
+<mat-slide-toggle (change)="showDoneTasks = $event.checked">Show Done Tasks</mat-slide-toggle>
+
+@if (showDoneTasks) {
+  <hr/>
+<app-loading [loading]="loadingDone">
+ 
+  <table
+    mat-table
+    [dataSource]="dataSourceDone"
+    class="full-width-table"
+    matSort
+    aria-label="Elements"
+  >
+    <ng-container matColumnDef="select">
+      <th mat-header-cell *matHeaderCellDef>
+        <mat-checkbox
+          (change)="$event ? toggleAllRowsDone() : null"
+          [checked]="selectionDone.hasValue() && isAllSelectedDone()"
+          [indeterminate]="selectionDone.hasValue() && !isAllSelectedDone()"
+        >
+        </mat-checkbox>
+      </th>
+      <td mat-cell *matCellDef="let row">
+        <mat-checkbox
+          (click)="$event.stopPropagation()"
+          (change)="$event ? selectionDone.toggle(row) : null"
+          [checked]="selectionDone.isSelected(row)"
+        >
+        </mat-checkbox>
+      </td>
+    </ng-container>
+
+    <!-- Id Column -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Id</th>
+      <td mat-cell *matCellDef="let row" width="50px">{{ row.id }}</td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+      <td mat-cell *matCellDef="let row" width="20%">{{ row.name }}</td>
+    </ng-container>
+
+    <!-- Description Column -->
+    <ng-container matColumnDef="description">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Description</th>
+      <td mat-cell *matCellDef="let row" width="50%">{{ row.description }}</td>
+    </ng-container>
+
+    <!-- Category Column -->
+    <ng-container matColumnDef="category">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Category</th>
+      <td mat-cell *matCellDef="let row" width="20%">{{ row.category }}</td>
+    </ng-container>
+
+    <!-- Action Edit Column -->
+    <ng-container matColumnDef="actionEdit">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+      <td mat-cell *matCellDef="let row" class="noMarginPadding" width="50px">
+        <button
+          mat-icon-button
+          routerLink="/tasks/edit/{{ row.id }}"
+          aria-label="Edit"
+        >
+          <mat-icon>edit</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <!-- Action Delete Column -->
+    <ng-container matColumnDef="actionDelete">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+      <td mat-cell *matCellDef="let row" class="noMarginPadding" width="50px">
+        <button
+          mat-icon-button
+          (click)="onDeleteClick(row.id)"
+          aria-label="Edit"
+        >
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+
+  <mat-paginator
+    [pageSize]="5"
+    [pageSizeOptions]="[5, 10, 20]"
+    showFirstLastButtons
+  ></mat-paginator>
+
+</app-loading>
+
+<button mat-flat-button color="primary" (click)="onMarkAsUnDoneClick()" click="markAsDone" [disabled]="!selectionDone.hasValue()">Mark as undone</button>
+}
