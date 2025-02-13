@@ -108,6 +108,7 @@
 <mat-slide-toggle (change)="showDoneTasks = $event.checked">Show Done Tasks</mat-slide-toggle>
 
 @if (showDoneTasks) {
+  <hr/>
 <app-loading [loading]="loadingDone">
  
   <table
