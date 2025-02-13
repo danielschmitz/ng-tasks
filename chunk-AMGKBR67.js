@@ -1,0 +1,1 @@
+import{a as e}from"./chunk-VCR3DY3D.js";import{$ as r}from"./chunk-T4MBMAI6.js";var o=class t extends e{constructor(){super("categories")}static \u0275fac=function(i){return new(i||t)};static \u0275prov=r({token:t,factory:t.\u0275fac,providedIn:"root"})};export{o as a};
