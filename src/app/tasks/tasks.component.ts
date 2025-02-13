@@ -16,6 +16,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../shared/confirm-dialog.component';
 import { SelectionModel } from '@angular/cdk/collections';
 import { HttpErrorResponse } from '@angular/common/http';
+import { MatSlideToggle, MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 @Component({
   selector: 'app-tasks',
@@ -28,8 +29,11 @@ export class TasksComponent implements OnInit, AfterViewInit {
   snak = inject(MatSnackBar);
   dialog = inject(MatDialog);
   tasks$: Observable<Task[]> = this.service.getAll();
+  doneTasks$: Observable<Task[]> = this.service.getAllDone();
   tasks: Task[] = [];
   loading = false;
+  loadingDone = false;
+  showDoneTasks = false;
 
   displayedColumns: string[] = [
     'select',
@@ -43,16 +47,27 @@ export class TasksComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatTable) table!: MatTable<Task>;
+  @ViewChild(MatPaginator) paginatorDone!: MatPaginator;
+  @ViewChild(MatSort) sortDone!: MatSort;
+  @ViewChild(MatTable) tableDone!: MatTable<Task>;
+
   dataSource = new MatTableDataSource<Task>([]);
   selection = new SelectionModel<Task>(true, []);
 
+  dataSourceDone = new MatTableDataSource<Task>([]);
+  selectionDone = new SelectionModel<Task>(true, [])
+
   ngOnInit(): void {
     this.fetchTasks();
+    this.fetchTasksDone();
   }
 
   ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
+
+    this.dataSourceDone.sort = this.sortDone;
+    this.dataSourceDone.paginator = this.paginatorDone;
   }
 
   fetchTasks() {
@@ -68,6 +83,20 @@ export class TasksComponent implements OnInit, AfterViewInit {
       },
     });
   }
+
+  fetchTasksDone() {
+    this.loadingDone = true;
+    this.doneTasks$.subscribe({
+      next: (tasks) => {
+        this.dataSourceDone.data = tasks;
+        this.loadingDone = false;
+      },
+      error: () => {
+        this.loadingDone = false;
+        this.snak.open('Error loading tasks');
+      },
+    });
+  } 
 
   onDeleteClick(id: string) {
     const dialogRef = this.dialog
@@ -109,6 +138,12 @@ export class TasksComponent implements OnInit, AfterViewInit {
     return numSelected === numRows;
   }
 
+  isAllSelectedDone(){
+    const numSelected = this.selectionDone.selected.length;
+    const numRows = this.dataSourceDone.data.length;
+    return numSelected === numRows;
+  }
+
   toggleAllRows() {
     if (this.isAllSelected()) {
       this.selection.clear();
@@ -118,8 +153,13 @@ export class TasksComponent implements OnInit, AfterViewInit {
     this.selection.select(...this.dataSource.data);
   }
 
-  isAnyRowSelected(): boolean {
-    return this.selection.selected.length > 0;
+  toggleAllRowsDone() {
+    if (this.isAllSelectedDone()) {
+      this.selectionDone.clear();
+      return;
+    }   
+
+    this.selectionDone.select(...this.dataSourceDone.data);
   }
 
   onMarkAsDoneClick() {
@@ -130,6 +170,23 @@ export class TasksComponent implements OnInit, AfterViewInit {
       .subscribe({
         next: () => {
           this.fetchTasks();
+          this.fetchTasksDone();
+        },
+        error: (error) => {
+          this.snak.open(error.error.message);
+        }
+      });
+  }
+
+  onMarkAsUnDoneClick() {
+    this.loadingDone = true;
+    this.service
+      .markAsUnDone(this.selectionDone.selected)
+      .pipe(finalize(() => (this.loadingDone = false)))
+      .subscribe({
+        next: () => {
+          this.fetchTasks();
+          this.fetchTasksDone();
         },
         error: (error) => {
           this.snak.open(error.error.message);
